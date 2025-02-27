@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Roobert';
+    src: url('/fonts/Roobert-Regular.woff2') format('woff2'),
+         url('/fonts/Roobert-Regular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Roobert';
+    src: url('/fonts/Roobert-SemiBold.woff2') format('woff2'),
+         url('/fonts/Roobert-SemiBold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+    @font-face {
+        font-family: 'Roobert';
+        src: url('/fonts/RoobertTRIAL-Regular.woff2') format('woff2'),
+             url('/fonts/RoobertTRIAL-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Roobert';
+        src: url('/fonts/RoobertTRIAL-SemiBold.woff2') format('woff2'),
+             url('/fonts/RoobertTRIAL-SemiBold.woff') format('woff');
+        font-weight: 800;
+        font-style: normal;
+    }
