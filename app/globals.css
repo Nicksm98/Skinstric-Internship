@@ -349,15 +349,33 @@ input:focus + .label {
   display: none;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.box-3, .box-2, .box-1 {
+  transform: rotate(45deg);
+  transition: transform 0.5s ease;
 }
 
-.box {
-  animation: rotate 200s linear infinite;
+.stationary {
+  transform: rotate(-45deg);
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counter-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.box-3 {
+  animation: rotate 180s linear infinite;
+}
+
+.box-2 {
+  animation: rotate 360s linear infinite;
+}
+
+.box-1 {
+  animation: rotate 540s linear infinite;
 }
