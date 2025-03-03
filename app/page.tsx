@@ -13,7 +13,7 @@ export default function Home () {
       <header className='h-16 flex items-center justify-between px-8'>
         <div className='flex items-center gap-4'>
           <p className='font-semibold text-[14px] tracking-wide'>SKINSTRIC</p>
-          <div className='flex items-center text-[24px] tracking-widest'>
+          <div className='flex items-center text-[17px] tracking-widest'>
             [<p className='px-2 text-sm tracking-tighter'>INTRO</p>]
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function Home () {
           <p className='right-btn mr-7 text-sm'>TAKE TEST</p>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
-              <Link href='/Introduction'>
+              <Link href='/introduction'>
                 <Button
                   className='right-btn bg-transparent hover:bg-transparent -rotate-45'
                   onMouseEnter={() => setRightHovered(true)}
