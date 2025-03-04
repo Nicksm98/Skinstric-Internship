@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
@@ -8,6 +8,7 @@ const Photo = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isUploaded, setIsUploaded] = useState(false)
   const [error, setError] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -24,20 +25,18 @@ const Photo = () => {
       return
     }
 
-    const reader = new FileReader()
-    reader.readAsDataURL(selectedFile)
-    reader.onloadend = async () => {
-      const base64String = reader.result as string
+    const formData = new FormData()
+    formData.append('file', selectedFile)
 
       try {
-        const response = await fetch('https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ file: base64String })
-        })
-        
+        const response = await fetch(
+          'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
+          {
+            method: 'POST',
+            body: formData
+          }
+        )
+
         if (response.ok) {
           setIsUploaded(true)
           setError('')
@@ -51,14 +50,19 @@ const Photo = () => {
         setError('Error uploading file')
       }
     }
-    reader.onerror = () => {
-      setError('Error reading file')
-    }
-    reader.readAsDataURL(selectedFile)
-  }
 
   return (
     <div className='h-screen w-screen flex flex-col'>
+      <header className='h-16 pt-[16px] flex flex-col gap-8 px-8'>
+        <div className='flex items-center gap-4'>
+          <Link href='/introduction'>
+            <p className='font-semibold text-[14px] tracking-wide'>SKINSTRIC</p>
+          </Link>
+          <div className='flex items-center text-[17px] tracking-widest'>
+            [<p className='px-2 text-sm tracking-tighter'>INTRO</p>]
+          </div>
+        </div>
+      </header>
       <div className='pl-[32px] font-semibold text-[16px]'>
         TO START ANALYSIS
       </div>
@@ -69,12 +73,13 @@ const Photo = () => {
               <div className='box box-1 flex items-center justify-center'></div>
             </div>
           </div>
-          <input type='file' onChange={handleFileChange} className='absolute opacity-0 w-full h-full cursor-pointer' />
+          <Link className='absolute cursor-pointer' href='/analysis/aicamera'>
           <img
-            className='absolute h-[120px] w-[120px] object-contain'
+            className='h-[120px] w-[120px] object-contain cursor-pointer'
             src='/assets/camera-icon.png'
             alt='Camera Icon'
-          />
+            />
+            </Link>
           <div className='absolute' style={{ top: '17%', left: '57%' }}>
             <div
               className='flex flex-row-reverse'
@@ -96,14 +101,21 @@ const Photo = () => {
               <div className='box box-1 flex items-center justify-center'></div>
             </div>
           </div>
-          <input type='file' onChange={handleFileChange} className='absolute opacity-0 w-full h-full cursor-pointer' />
+            <input
+              type='file'
+              id='gallery-input'
+              onChange={handleFileChange}
+              className='hidden absolute '
+            />
+          <label htmlFor='gallery-input' className='absolute cursor-pointer z-1000'>
           <img
-            className='absolute h-[120px] w-[120px] object-contain'
+            className='h-[120px] w-[120px] object-contain z-10 cursor-pointer'
             src='/assets/gallery.png'
             alt='Gallery Icon'
           />
+          </label>
           <div className='absolute' style={{ bottom: '34%', right: '57%' }}>
-            <div className='' style={{ transform: 'rotate(-45deg)' }}>
+            <div style={{ transform: 'rotate(-45deg)' }}>
               <div className='h-[1px] w-[100px] bg-black'></div>
             </div>
           </div>

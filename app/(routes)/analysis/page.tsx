@@ -4,6 +4,16 @@ import { Button } from '@/components/ui/button'
 const Analysis = () => {
   return (
     <div className='h-screen w-screen flex flex-col'>
+      <header className='h-16 pt-[16px] flex flex-col gap-8 px-8'>
+        <div className='flex items-center gap-4'>
+          <Link href='/'>
+            <p className='font-semibold text-[14px] tracking-wide'>SKINSTRIC</p>
+          </Link>
+          <div className='flex items-center text-[17px] tracking-widest'>
+            [<p className='px-2 text-sm tracking-tighter'>ANALYSIS</p>]
+          </div>
+        </div>
+      </header>
       <div className='pl-[32px] font-semibold text-[16px]'>A.I. ANALYSIS</div>
       <div className='pl-[32px] font-normal text-[14px]'>
         A.I. HAS ESTIMATED THE FOLLOWING.

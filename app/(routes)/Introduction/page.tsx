@@ -129,6 +129,16 @@ const Introduction = () => {
 
   return (
     <div className='min-h-screen w-screen flex flex-col'>
+      <header className='h-16 pt-[16px] flex flex-col gap-8 px-8'>
+        <div className='flex items-center gap-4'>
+          <Link href='/'>
+            <p className='font-semibold text-[14px] tracking-wide'>SKINSTRIC</p>
+          </Link>
+          <div className='flex items-center text-[17px] tracking-widest'>
+            [<p className='px-2 text-sm tracking-tighter'>INTRO</p>]
+          </div>
+        </div>
+      </header>
       <div className='pl-[32px] font-semibold text-[16px]'>TO START ANALYSIS</div>
       <main className='flex-grow flex flex-col items-center justify-center bg-white text-black relative'>
         <div className='box-container h-[550px] w-[550px] flex items-center justify-center'>
