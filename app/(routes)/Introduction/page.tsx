@@ -77,7 +77,7 @@ const Introduction = () => {
     }
   }
 
-  const handleProceed = (e: React.FormEvent) => {
+  const handleProceed = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!nameEntered) {
       if (!name) {
@@ -108,10 +108,26 @@ const Introduction = () => {
         return
       }
 
+      try { 
+        const response = await fetch(
+          'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseOne',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, location })
+          }
+        )
+        const data = await response.json()
+        console.log('API response:', data)
+      } catch (error) {
+        console.error('Error hitting the API:', error)
+      }
+
       localStorage.setItem('name', name)
       localStorage.setItem('location', location)
       setError('')
-      // Proceed to the Photo page
       document.getElementById('proceed-link')?.click()
     }
   }
