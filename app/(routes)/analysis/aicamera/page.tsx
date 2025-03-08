@@ -1,28 +1,51 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 const AiCamera = () => {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const startCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+          videoRef.current.onloadedmetadata = () => {
+            videoRef.current?.play()
+            console.log('Camera feed started')
+            setTimeout(() => setLoading(false), 3000) // Simulate loading for 3 seconds
+          }
+        }
+      } catch (err) {
+        console.error('Error accessing camera: ', err)
+        setLoading(false)
+      }
+    }
+
+    startCamera()
+
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream
+        stream.getTracks().forEach(track => track.stop())
+      }
+    }
+  }, [])
+
   return (
     <div className='min-h-screen w-screen flex flex-col'>
       <main className='flex-grow flex flex-col items-center justify-center bg-white text-black relative'>
-        <div className='box-container h-[550px] w-[550px] flex items-center justify-center'>
-          <div className='absolute h-[50%] w-[30%] flex flex-col items-center justify-center text-center'>
-            <h2 className='text-[14px] absolute top-40 pb-8'></h2>
-            <Link href='/introduction/photo' id='proceed-link' />
+        {loading ? (
+          <div className='box-container h-[550px] w-[550px] flex items-center justify-center'>
+            <div className='absolute font-semibold text-[16px]' style={{ bottom: '34%' }}>SETTING UP CAMERA ...</div>
           </div>
-          <div className='box box-3 flex items-center justify-center'>
-            <div className='box box-2 flex items-center justify-center'>
-              <div className='relative box box-1 flex items-center justify-center'>
-                <img
-                  className='h-[120px] w-[120px] object-contain cursor-pointer text-tight'
-                  src='/assets/camera-icon.png'
-                  alt='Camera Icon'
-                />
-              </div>
-            </div>
-          </div>
-          <div className='absolute font-semibold text-[16px]' style={{ bottom: '34%' }}>SETTING UP CAMERA ...</div>
-        </div>
+        ) : (
+          <video ref={videoRef} className='w-full h-full object-cover' autoPlay playsInline />
+        )}
         <div className='left-btn absolute left-[32px] bottom-[40px] flex items-center justify-center'>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
@@ -39,4 +62,5 @@ const AiCamera = () => {
     </div>
   )
 }
+
 export default AiCamera

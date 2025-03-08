@@ -12,13 +12,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
   onClose,
   onFileSelect
 }) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [error, setError] = useState('')
-  const [progress, setProgress] = useState(0)
+  const [, setSelectedFile] = useState<File | null>(null)
+  const [, setError] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
       if (file.size > 4 * 1024 * 1024) {
@@ -32,23 +31,14 @@ const UploadModal: React.FC<UploadModalProps> = ({
       setSelectedFile(file)
       setError('')
       onFileSelect(file)
-      router.push('/analysis/demographics') // Navigate to the demographics page
+      await handleUpload(file) 
     }
   }
 
-  const handleUpload = async (event: React.FormEvent) => {
-    event.preventDefault()
-
-    if (!selectedFile) {
-      setError('Please select a file first')
-      fileInputRef.current?.click()
-      return
-    }
-
+  const handleUpload = async (file: File) => {
     const reader = new FileReader()
     reader.onloadend = async () => {
       const base64String = reader.result as string
-      console.log('Base64 String:', base64String) // Log the base64 string
 
       try {
         const response = await fetch(
@@ -62,14 +52,16 @@ const UploadModal: React.FC<UploadModalProps> = ({
           }
         )
 
-        console.log('Response:', response) // Log the response
-
         if (response.ok) {
           const responseData = await response.json()
-          console.log('Response Data:', responseData) // Log the response data
-          onFileSelect(selectedFile)
-          console.log('Results:', responseData) // Print the results to the console
-          router.push('/analysis/demographics') // Navigate to the demographics page
+          onFileSelect(file)
+          console.log('Results:', responseData) 
+
+          localStorage.setItem('apiResponse', JSON.stringify(responseData))
+          console.log('Stored in localStorage:', localStorage.getItem('apiResponse'))
+
+          const queryString = `?race=${JSON.stringify(responseData.race)}&age=${JSON.stringify(responseData.age)}&gender=${JSON.stringify(responseData.gender)}`
+          router.push(`/analysis/demographics${queryString}`)
         } else {
           const errorData = await response.json()
           console.error('Error uploading file:', errorData)
@@ -86,7 +78,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
       setError('Error reading file')
     }
 
-    reader.readAsDataURL(selectedFile)
+    reader.readAsDataURL(file)
   }
 
   if (!isOpen) return null
@@ -139,7 +131,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
             </div>
           </div>
         </div>
-        <form onSubmit={handleUpload}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <input
             type='file'
             ref={fileInputRef}
@@ -156,9 +148,10 @@ const UploadModal: React.FC<UploadModalProps> = ({
             </button>
             <button
               className=' text-white px-4 text-[14px] rounded'
-              type='submit'
+              onClick={() => fileInputRef.current?.click()}
+              type='button'
             >
-              UPLOAD IMAGE RECIEVED, FACE DETECTED
+              UPLOAD
             </button>
           </div>
         </form>

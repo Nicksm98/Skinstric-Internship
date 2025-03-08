@@ -2,15 +2,40 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import UploadModal from '@/components/modal/uploadmodal'
 
 const Photo = () => {
   const [, setSelectedFile] = useState<File | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const router = useRouter()
 
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = async (file: File) => {
     setSelectedFile(file)
     console.log('Selected file:', file)
+
+    // Send the photo to the endpoint
+    const formData = new FormData()
+    formData.append('file', file)
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        // Store the results in localStorage
+        localStorage.setItem('demographicsData', JSON.stringify(result))
+        // Redirect to the demographics page
+        router.push('/demographics')
+      } else {
+        console.error('Failed to upload the photo')
+      }
+    } catch (error) {
+      console.error('Error uploading the photo:', error)
+    }
   }
 
   useEffect(() => {
@@ -107,4 +132,4 @@ const Photo = () => {
   )
 }
 
-export default Photo
+export default Phot
