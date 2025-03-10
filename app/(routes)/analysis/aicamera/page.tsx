@@ -241,21 +241,21 @@ const AiCamera = () => {
         <div className='left-btn ml-7 text-sm tracking-wide'>BACK</div>
       </div>
       {hasPhoto && (
+              <Link href='/analysis/demographics'>
         <div className='right-btn absolute right-[32px] bottom-[40px] flex items-center justify-center'>
           <div className='right-btn mr-7 text-sm tracking-wide'>PROCEED</div>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
-              <Link href='/analysis/demographics'>
                 <Button
                   className='right-btn bg-transparent hover:bg-transparent rotate-135'
                   onClick={handleProceed}
                 >
                   <div className='w-0 h-0 border-l-5 border-r-5 border-b-8 transform rotate-270 border-transparent border-b-black'></div>
                 </Button>
-              </Link>
             </div>
           </div>
         </div>
+              </Link>
       )}
     </div>
   )

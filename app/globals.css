@@ -418,7 +418,7 @@ input:focus + .label {
 
 .modal2 {
   transform-origin: right;
-  animation: slideInFromRight 3s forwards;
+  animation: slideInFromRight 2s forwards;
 }
 
 .progress-circle {
