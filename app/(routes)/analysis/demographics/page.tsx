@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+interface ApiResponse {
+  data: {
+    race: { [key: string]: number }
+    age: { [key: string]: number }
+    sex?: { [key: string]: number }
+  }
+}
 
 const Demographics = () => {
   const [apiResponse, setApiResponse] = useState<ApiResponse>(null)
