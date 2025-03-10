@@ -26,7 +26,7 @@ const Analysis = () => {
         <div className='box-container h-[600px] w-[600px] flex items-center justify-center relative rotate-45'>
           <div className='info flex items-center absolute h-[55%] w-[55%]'>
             <Link
-              className='absolute h-[50%] w-[50%] border-[4px] border-white flex items-center justify-center cursor-not-allowed' href='/analysis/demographics' style={{ top: 0, left: 0 }}>
+              className='absolute h-[50%] w-[50%] border-[4px] border-white flex items-center justify-center cursor-pointer' href='/analysis/demographics' style={{ top: 0, left: 0 }}>
               <div className='z-3 info h-full w-full bg-[#F3F3F4] flex justify-center items-center text-black font-semibold text-[14px]'>
                 <div className='-rotate-45 text-center'>DEMOGRAPHICS</div>
               </div>
