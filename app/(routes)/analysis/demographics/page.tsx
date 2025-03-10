@@ -139,7 +139,7 @@ const Demographics = () => {
                 }`}
               >
                 <div
-                  className={`h-[60%] w-[60%] box-border border-white border-solid bg-black ${
+                  className={`h-[60%] w-[60%] box-border border-white border-solid bg-[#F3F3F4] ${
                     selectedRace === race ? 'bg-white' : ''
                   }`}
                 ></div>
@@ -169,7 +169,7 @@ const Demographics = () => {
                 }`}
               >
                 <div
-                  className={`h-[60%] w-[60%] box-border border-white border-solid bg-black ${
+                  className={`h-[60%] w-[60%] box-border border-white border-solid bg-[#F3F3F4] ${
                     selectedAge === age ? 'bg-white' : ''
                   }`}
                 ></div>
@@ -199,7 +199,7 @@ const Demographics = () => {
                 }`}
               >
                 <div
-                  className={`h-[60%] w-[60%] box-border border-white border-solid bg-black ${
+                  className={`h-[60%] w-[60%] box-border border-white border-solid bg-[#F3F3F4] ${
                     selectedGender === gender ? 'bg-white' : ''
                   }`}
                 ></div>
