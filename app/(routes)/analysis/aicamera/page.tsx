@@ -6,6 +6,12 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { useEffect, useRef, useState } from 'react'
 
+interface ResponseData {
+  race: string;
+  age: number;
+  sex: string;
+}
+
 const AiCamera = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasPhoto, setHasPhoto] = useState(false)
@@ -70,7 +76,7 @@ const AiCamera = () => {
         )
 
         if (response.ok) {
-          const data = await response.json()
+          const data: ResponseData = await response.json()
           console.log('Results:', data)
 
           localStorage.setItem('apiResponse', JSON.stringify(data))
