@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { useEffect, useRef, useState } from 'react'
 
 const AiCamera = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -73,7 +74,10 @@ const AiCamera = () => {
           console.log('Results:', data)
 
           localStorage.setItem('apiResponse', JSON.stringify(data))
-          console.log('Stored in localStorage:', localStorage.getItem('apiResponse'))
+          console.log(
+            'Stored in localStorage:',
+            localStorage.getItem('apiResponse')
+          )
 
           setResponseData(data)
         } else {
@@ -88,7 +92,11 @@ const AiCamera = () => {
 
   const handleProceed = () => {
     if (responseData) {
-      const queryString = `?race=${JSON.stringify(responseData.race)}&age=${JSON.stringify(responseData.age)}&sex=${JSON.stringify(responseData.sex)}`
+      const queryString = `?race=${JSON.stringify(
+        responseData.race
+      )}&age=${JSON.stringify(responseData.age)}&sex=${JSON.stringify(
+        responseData.sex
+      )}`
       router.push(`/analysis/demographics${queryString}`)
     }
   }
@@ -101,7 +109,12 @@ const AiCamera = () => {
             <div className='absolute box box-3 flex items-center justify-center'>
               <div className='absolute box box-2 flex items-center justify-center'>
                 <div className='absolute box box-1 flex items-center justify-center'>
-                  <img src='/assets/camera-icon.png' alt='' />
+                  <Image
+                    src='/assets/camera-icon.png'
+                    alt=''
+                    height={100}
+                    width={100}
+                  />
                 </div>
               </div>
             </div>
@@ -113,15 +126,33 @@ const AiCamera = () => {
             <div className='mb-4'>TO GET BETTER RESULTS MAKE SURE TO HAVE</div>
             <div className='flex'>
               <div className='flex items-center text-black'>
-                <img className='h-3 w-3 mr-2' src='/assets/blkbox.png' alt='' />
+                <Image
+                  className='mr-2'
+                  src='/assets/blkbox.png'
+                  alt=''
+                  height={12}
+                  width={12}
+                />
                 <div className=''>NEUTRAL EXPRESSION</div>
               </div>
               <div className='flex ml-6 mr-6 items-center text-black'>
-                <img className='h-3 w-3 mr-2' src='/assets/blkbox.png' alt='' />
+                <Image
+                  className='mr-2'
+                  src='/assets/blkbox.png'
+                  alt=''
+                  height={12}
+                  width={12}
+                />
                 <div className=''>FRONTAL POSE</div>
               </div>
               <div className='flex items-center text-black'>
-                <img className='h-3 w-3 mr-2' src='/assets/blkbox.png' alt='' />
+                <Image
+                  className='mr-2'
+                  src='/assets/blkbox.png'
+                  alt=''
+                  height={12}
+                  width={12}
+                />
                 <div className=''>ADEQUATE LIGHTNING</div>
               </div>
             </div>
@@ -139,22 +170,44 @@ const AiCamera = () => {
           onClick={takePhoto}
           className='mr-4px text-white cursor-pointer'
         >
-          <img src='/assets/camera.png' alt='' />
+          <Image 
+            src='/assets/camera.png' 
+            alt='' 
+            height={80} 
+            width={80} />
         </button>
       </div>
       <div className='absolute flex flex-col items-center text-center bottom-[5%] text-[#FCFCFC] w-screen z-10'>
         <div className='mb-4'>TO GET BETTER RESULTS MAKE SURE TO HAVE</div>
         <div className='flex'>
           <div className='flex items-center text-white'>
-            <img className='h-3 w-3 mr-2' src='/assets/box.png' alt='' />
+            <Image
+              className='mr-2'
+              src='/assets/box.png'
+              alt=''
+              height={12}
+              width={12}
+            />
             <div className=''>NEUTRAL EXPRESSION</div>
           </div>
           <div className='flex ml-6 mr-6 items-center text-white'>
-            <img className='h-3 w-3 mr-2' src='/assets/box.png' alt='' />
+            <Image
+              className='mr-2'
+              src='/assets/box.png'
+              alt=''
+              height={12}
+              width={12}
+            />
             <div className=''>FRONTAL POSE</div>
           </div>
           <div className='flex items-center text-white'>
-            <img className='h-3 w-3 mr-2' src='/assets/box.png' alt='' />
+            <Image
+              className='mr-2'
+              src='/assets/box.png'
+              alt=''
+              height={12}
+              width={12}
+            />
             <div className=''>ADEQUATE LIGHTNING</div>
           </div>
         </div>
@@ -187,7 +240,10 @@ const AiCamera = () => {
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
               <Link href='/analysis/demographics'>
-                <Button className='right-btn bg-transparent hover:bg-transparent rotate-135' onClick={handleProceed}>
+                <Button
+                  className='right-btn bg-transparent hover:bg-transparent rotate-135'
+                  onClick={handleProceed}
+                >
                   <div className='w-0 h-0 border-l-5 border-r-5 border-b-8 transform rotate-270 border-transparent border-b-black'></div>
                 </Button>
               </Link>

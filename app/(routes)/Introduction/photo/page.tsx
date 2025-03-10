@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 import UploadModal from '@/components/modal/uploadmodal'
 import CameraModal from '@/components/modal/cameramodal'
-import { Button } from '@/components/ui/button'
 
 const Photo = () => {
   const [, setSelectedFile] = useState<File | null>(null)
@@ -51,10 +52,12 @@ const Photo = () => {
            className='absolute hover:scale-90 cursor-pointer transition-transform duration-300'
            onClick={() => setIsCameraModalOpen(true)}
            >
-            <img
-              className='h-[120px] w-[120px] object-contain cursor-pointer'
+            <Image 
+              className='object-contain cursor-pointer'
               src='/assets/camera-icon.png'
               alt='Camera Icon'
+              height={120}
+              width={120}
             />
           </button>
           <div className='absolute' style={{ top: '17%', left: '57%' }}>
@@ -82,10 +85,12 @@ const Photo = () => {
             className='absolute cursor-pointer z-1000 transition-transform duration-300 hover:scale-90'
             onClick={() => setIsUploadModalOpen(true)}
           >
-            <img
-              className='h-[120px] w-[120px] object-contain z-10 cursor-pointer'
+            <Image
+              className='object-contain z-10 cursor-pointer'
               src='/assets/gallery.png'
               alt='Gallery Icon'
+              height={120}
+              width={120}
             />
           </button>
           <div className='absolute' style={{ bottom: '34%', right: '57%' }}>

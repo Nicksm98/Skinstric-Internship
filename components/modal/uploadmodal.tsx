@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -92,7 +93,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
         <div className='modal-body px-5 py-6 bg-black text-white border-t-2 border-b-2 text-sm'>
           <div>
             <div className='flex items-center mb-1'>
-              <img src='/assets/box.png' alt='' />
+              <Image
+               src='/assets/box.png' 
+               alt='' 
+               height={12}
+               width={12}
+               />
               <p className='ml-2'>NEUTRAL EXPRESSION</p>
             </div>
             <div className='flex items-center mb-6'>
@@ -104,7 +110,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
           </div>
           <div>
             <div className='flex items-center mb-1'>
-              <img src='/assets/box.png' alt='' />
+              <Image
+               src='/assets/box.png' 
+               alt='' 
+               height={12}
+               width={12}
+               />
               <p className='ml-2'>FRONTAL POSE</p>
             </div>
             <div className='flex items-center mb-6'>
@@ -117,7 +128,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
           </div>
           <div>
             <div className='flex items-center mb-1'>
-              <img src='/assets/box.png' alt='' />
+              <Image
+               src='/assets/box.png' 
+               alt=''
+               height={12}
+               width={12}
+               />
               <p className='ml-2'>ADEQUATE LIGHTING</p>
             </div>
             <div className='flex items-center mb-6'>
