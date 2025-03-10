@@ -60,8 +60,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
           localStorage.setItem('apiResponse', JSON.stringify(responseData))
           console.log('Stored in localStorage:', localStorage.getItem('apiResponse'))
 
-          const queryString = `?race=${JSON.stringify(responseData.race)}&age=${JSON.stringify(responseData.age)}&gender=${JSON.stringify(responseData.gender)}`
-          router.push(`/analysis/demographics${queryString}`)
         } else {
           const errorData = await response.json()
           console.error('Error uploading file:', errorData)
@@ -84,7 +82,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
   if (!isOpen) return null
 
   return (
-    <div className='modal-overlay fixed inset-0 flex items-center justify-center z-1000'>
+    <div className='modal2 modal-overlay fixed inset-0 flex items-center justify-center z-1000'>
       <div className='modal-container bg-white rounded-lg shadow-lg w-[450px]'>
         <div className='modal-header bg-black text-white px-6 py-2'>
           <p className='text-sm font-semibold'>

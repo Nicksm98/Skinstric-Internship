@@ -15,7 +15,7 @@ const Introduction = () => {
   const [nameEntered, setNameEntered] = useState(false)
   const [underlineWidth, setUnderlineWidth] = useState('auto')
   const [headerText, setHeaderText] = useState('CLICK TO TYPE')
-  const [error, setError] = useState('')
+  const [, setError] = useState('')
 
   useEffect(() => {
     if (inputRef.current) {
@@ -36,6 +36,8 @@ const Introduction = () => {
       setPlaceholderVisible(false)
       setIsTyping(true)
       setHeaderText(inputRef.current.placeholder)
+    } else if (nameEntered && locationRef.current) {
+      locationRef.current.focus()
     }
   }
 
@@ -56,6 +58,8 @@ const Introduction = () => {
 
   const handleLocationBlur = async () => {
     if (location === '') {
+      setPlaceholderVisible(true)
+      setIsTyping(false)
       setHeaderText('Where are you from?')
     } else {
       try {
@@ -108,7 +112,7 @@ const Introduction = () => {
         return
       }
 
-      try { 
+      try {
         const response = await fetch(
           'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseOne',
           {
@@ -132,17 +136,6 @@ const Introduction = () => {
     }
   }
 
-  const handleReset = () => {
-    setName('')
-    setLocation('')
-    setNameEntered(false)
-    setLocationVisible(false)
-    setHeaderText('CLICK TO TYPE')
-    setError('')
-    setPlaceholderVisible(true)
-    setIsTyping(false)
-  }
-
   return (
     <div className='min-h-screen w-screen flex flex-col'>
       <header className='h-16 pt-[16px] flex flex-col gap-8 px-8'>
@@ -155,7 +148,9 @@ const Introduction = () => {
           </div>
         </div>
       </header>
-      <div className='pl-[32px] font-semibold text-[16px]'>TO START ANALYSIS</div>
+      <div className='pl-[32px] font-semibold text-[16px]'>
+        TO START ANALYSIS
+      </div>
       <main className='flex-grow flex flex-col items-center justify-center bg-white text-black relative'>
         <div className='box-container h-[550px] w-[550px] flex items-center justify-center'>
           <div className='absolute h-[50%] w-[30%] flex flex-col items-center justify-center text-center'>
@@ -187,6 +182,7 @@ const Introduction = () => {
                     ref={locationRef}
                     value={location}
                     onChange={e => setLocation(e.target.value)}
+                    onBlur={handleLocationBlur}
                   />
                 )}
               </div>

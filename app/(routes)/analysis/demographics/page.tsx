@@ -5,15 +5,16 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+
 const Demographics = () => {
   const [apiResponse, setApiResponse] = useState<any>(null)
   const [selectedAge, setSelectedAge] = useState<string | null>(null)
   const [selectedRace, setSelectedRace] = useState<string | null>(null)
-  const [selectedGender, setSelectedGender] = useState<string | null>(null)
+  const [selectedSex, setSelectedSex] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('Race')
   const [initialRace, setInitialRace] = useState<string | null>(null)
   const [initialAge, setInitialAge] = useState<string | null>(null)
-  const [initialGender, setInitialGender] = useState<string | null>(null)
+  const [initialSex, setInitialSex] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -26,14 +27,14 @@ const Demographics = () => {
       // Set initial selected values based on the highest percentage
       const highestRace = Object.entries(parsedResponse.data.race).sort((a, b) => b[1] - a[1])[0][0]
       const highestAge = Object.entries(parsedResponse.data.age).sort((a, b) => b[1] - a[1])[0][0]
-      const highestGender = Object.entries(parsedResponse.data.gender).sort((a, b) => b[1] - a[1])[0][0]
+      const highestSex = parsedResponse.data.sex ? Object.entries(parsedResponse.data.sex).sort((a, b) => b[1] - a[1])[0][0] : null
 
       setSelectedRace(highestRace)
       setSelectedAge(highestAge)
-      setSelectedGender(highestGender)
+      setSelectedSex(highestSex)
       setInitialRace(highestRace)
       setInitialAge(highestAge)
-      setInitialGender(highestGender)
+      setInitialSex(highestSex)
     } else {
       router.push('/introduction/photo')
     }
@@ -66,9 +67,9 @@ const Demographics = () => {
     (a, b) => b[1] - a[1]
   )
 
-  const genderData = Object.entries(apiResponse.data.gender).sort(
+  const sexData =  apiResponse.data.sex ? Object.entries(apiResponse.data.sex).sort(
     (a, b) => b[1] - a[1]
-  )
+  ) : []
 
   const capitalizeFirstLetter = (string: string) => {
     return string
@@ -81,8 +82,8 @@ const Demographics = () => {
     setSelectedRace(race)
   }
 
-  const handleGenderClick = (gender: string) => {
-    setSelectedGender(gender)
+  const handleSexClick = (sex: string) => {
+    setSelectedSex(sex)
   }
 
   const handleAgeClick = (age: string) => {
@@ -96,8 +97,21 @@ const Demographics = () => {
   const handleReset = () => {
     setSelectedRace(initialRace)
     setSelectedAge(initialAge)
-    setSelectedGender(initialGender)
+    setSelectedSex(initialSex)
     setSelectedCategory('Race')
+  }
+
+  const getSelectedPercentage = () => {
+    switch (selectedCategory) {
+      case 'Race':
+        return raceData.find(([race]) => race === selectedRace)?.[1] || 0
+      case 'Age':
+        return ageData.find(([age]) => age === selectedAge)?.[1] || 0
+      case 'Gender':
+        return sexData.find(([sex]) => sex === selectedSex)?.[1] || 0
+      default:
+        return 0
+    }
   }
 
   const renderCategoryData = () => {
@@ -162,29 +176,29 @@ const Demographics = () => {
             </div>
           </button>
         ))
-      case 'Gender':
-        return genderData.map(([gender, percentage]) => (
+      case 'Sex':
+        return sexData.map(([sex, percentage]) => (
           <button
-            key={gender}
+            key={sex}
             className={`flex h-12 w-[100%] items-center justify-between bg-[#F3F3F4] ${
-              selectedGender === gender ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
+              selectedSex === sex ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
             }`}
-            onClick={() => handleGenderClick(gender)}
+            onClick={() => handleSexClick(sex)}
           >
             <div className='flex items-center'>
               <div
                 className={`h-[16px] w-[16px] ml-4 mr-4 box-border border-black border-[3px] flex items-center justify-center rotate-45 ${
-                  selectedGender === gender ? 'border-white' : ''
+                  selectedSex === sex ? 'border-white' : ''
                 }`}
               >
                 <div
                   className={`h-[60%] w-[60%] box-border border-white border-solid bg-black ${
-                    selectedGender === gender ? 'bg-white' : ''
+                    selectedSex === sex ? 'bg-white' : ''
                   }`}
                 ></div>
               </div>
               <div className=' flex text-center'>
-                {capitalizeFirstLetter(gender)}
+                {capitalizeFirstLetter(sex)}
               </div>
             </div>
             <div className='mr-4 text-[80%]'>
@@ -196,6 +210,9 @@ const Demographics = () => {
         return null
     }
   }
+
+  const selectedPercentage = getSelectedPercentage()
+  const strokeDashoffset = 283 - (283 * selectedPercentage)
 
   return (
     <div className='h-screen'>
@@ -231,18 +248,27 @@ const Demographics = () => {
             </button>
             <button
               className={`w-[100%] h-[17%] bg-[#F3F3F4] flex flex-col items-start justify-between border-t-2 border-black border-box mb-1 p-3 ${
-                selectedCategory === 'Gender' ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
+                selectedCategory === 'Sex' ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
               }`}
-              onClick={() => handleCategoryClick('Gender')}
+              onClick={() => handleCategoryClick('Sex')}
             >
               <div className='text-[16px] font-semibold'>
-                {selectedGender ? capitalizeFirstLetter(selectedGender) : 'Select gender'}
+                {selectedSex ? capitalizeFirstLetter(selectedSex) : 'Select sex'}
               </div>
-              <div className='text-[16px] font-semibold'>GENDER</div>
+              <div className='text-[16px] font-semibold'>Sex</div>
             </button>
           </div>
-          <div className='flex h-[100%] w-[60%] text-[40px] bg-[#F3F3F4] mt-25 ml-4 mr-4 pt-2 pb-2 pl-4 pr-4 border-t-black border-2'>
+          <div className='relative flex h-[100%] w-[60%] text-[40px] bg-[#F3F3F4] mt-25 ml-4 mr-4 pt-2 pb-2 pl-4 pr-4 border-t-black border-2'>
             {selectedCategory}
+            <div className='absolute bottom-0 right-0 flex items-center justify-center'>
+              <svg className='progress-circle' width='400' height='400' viewBox='0 0 100 100'>
+                <circle className='progress-circle-bg' cx='50' cy='50' r='45' />
+                <circle className='progress-circle-fg' cx='50' cy='50' r='45' style={{ strokeDashoffset }}/>
+              </svg>
+              <div className='absolute text-[24px] font-semibold'>
+                {(selectedPercentage * 100).toFixed(2)}%
+              </div>
+            </div>
           </div>
           <div className='mt-25 bl-4 br-4 border-t-black border-2 text-[100%] h-[100%] w-[28%] bg-[#F3F3F4] flex flex-col'>
             <div className='flex justify-between h-[48px] ml-4 mr-4 items-center'>

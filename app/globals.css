@@ -387,3 +387,54 @@ input:focus + .label {
   background-color: #E1E1E2;
 }
 
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%) scaleY(0.01);
+  }
+  50% {
+    transform: translateX(0) scaleY(0.01);
+  }
+  100% {
+    transform: translateX(0) scaleY(1);
+  }
+}
+.modal1 {
+  transform-origin: left;
+  animation: slideInFromLeft 3s forwards;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%) scaleY(0.01);
+  }
+  50% {
+    transform: translateX(0) scaleY(0.01);
+  }
+  100% {
+    transform: translateX(0) scaleY(1);
+  }
+}
+
+.modal2 {
+  transform-origin: right;
+  animation: slideInFromRight 3s forwards;
+}
+
+.progress-circle {
+  transform: rotate(-90deg);
+}
+
+.progress-circle-bg {
+  fill: none;
+  stroke: #e6e6e6;
+  stroke-width: 1;
+}
+
+.progress-circle-fg {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1;
+  stroke-dasharray: 283;
+  transition: stroke-dashoffset 0.5s ease;
+}
