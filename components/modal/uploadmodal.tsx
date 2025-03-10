@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { useState, useRef } from 'react'
-import { useRouter } from 'next/navigation'
 
 interface UploadModalProps {
   isOpen: boolean
@@ -16,7 +15,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
   const [, setSelectedFile] = useState<File | null>(null)
   const [, setError] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const router = useRouter()
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -32,7 +30,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
       setSelectedFile(file)
       setError('')
       onFileSelect(file)
-      await handleUpload(file) 
+      await handleUpload(file)
     }
   }
 
@@ -56,7 +54,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
         if (response.ok) {
           const responseData = await response.json()
           onFileSelect(file)
-          console.log('Results:', responseData) 
+          console.log('Results:', responseData)
 
           localStorage.setItem('apiResponse', JSON.stringify(responseData))
           console.log('Stored in localStorage:', localStorage.getItem('apiResponse'))
@@ -68,7 +66,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
         }
       } catch (error) {
         console.error('Error uploading file:', error)
-        setError(`Error uploading file: ${(error as any).message || 'Unknown error'}`)
+        setError(`Error uploading file: ${(error as Error).message || 'Unknown error'}`)
       }
     }
 
@@ -121,7 +119,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
             <div className='flex items-center mb-6'>
               <div className='text-black'></div>
               <div className='text-[#6E6E6E] text-[14px] ml-5'>
-                take the image from an arm's <br />
+                take the image from an arm&apos;s <br />
                 length away at eye level
               </div>
             </div>

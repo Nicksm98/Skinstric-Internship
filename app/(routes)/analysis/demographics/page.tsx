@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 
 const Demographics = () => {
-  const [apiResponse, setApiResponse] = useState<any>(null)
+  const [apiResponse, setApiResponse] = useState<ApiResponse>(null)
   const [selectedAge, setSelectedAge] = useState<string | null>(null)
   const [selectedRace, setSelectedRace] = useState<string | null>(null)
   const [selectedSex, setSelectedSex] = useState<string | null>(null)
