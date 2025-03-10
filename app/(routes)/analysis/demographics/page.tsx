@@ -9,7 +9,7 @@ interface ApiResponse {
   data: {
     race: { [key: string]: number }
     age: { [key: string]: number }
-    sex?: { [key: string]: number }
+    gender?: { [key: string]: number }
   }
 }
 
@@ -17,11 +17,11 @@ const Demographics = () => {
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null)
   const [selectedAge, setSelectedAge] = useState<string | null>(null)
   const [selectedRace, setSelectedRace] = useState<string | null>(null)
-  const [selectedSex, setSelectedSex] = useState<string | null>(null)
+  const [selectedGender, setSelectedGender] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('Race')
   const [initialRace, setInitialRace] = useState<string | null>(null)
   const [initialAge, setInitialAge] = useState<string | null>(null)
-  const [initialSex, setInitialSex] = useState<string | null>(null)
+  const [initialGender, setInitialGender] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -34,14 +34,14 @@ const Demographics = () => {
       // Set initial selected values based on the highest percentage
       const highestRace = Object.entries(parsedResponse.data.race).sort((a, b) => b[1] - a[1])[0][0]
       const highestAge = Object.entries(parsedResponse.data.age).sort((a, b) => b[1] - a[1])[0][0]
-      const highestSex = parsedResponse.data.sex ? Object.entries(parsedResponse.data.sex).sort((a, b) => b[1] - a[1])[0][0] : null
+      const highestGender = parsedResponse.data.gender ? Object.entries(parsedResponse.data.gender).sort((a, b) => b[1] - a[1])[0][0] : null
 
       setSelectedRace(highestRace)
       setSelectedAge(highestAge)
-      setSelectedSex(highestSex)
+      setSelectedGender(highestGender)
       setInitialRace(highestRace)
       setInitialAge(highestAge)
-      setInitialSex(highestSex)
+      setInitialGender(highestGender)
     } else {
       router.push('/introduction/photo')
     }
@@ -74,7 +74,7 @@ const Demographics = () => {
     (a, b) => b[1] - a[1]
   )
 
-  const sexData = apiResponse.data.sex ? Object.entries(apiResponse.data.sex).sort(
+  const genderData = apiResponse.data.gender ? Object.entries(apiResponse.data.gender).sort(
     (a, b) => b[1] - a[1]
   ) : []
 
@@ -89,8 +89,8 @@ const Demographics = () => {
     setSelectedRace(race)
   }
 
-  const handleSexClick = (sex: string) => {
-    setSelectedSex(sex)
+  const handleGenderClick = (gender: string) => {
+    setSelectedGender(gender)
   }
 
   const handleAgeClick = (age: string) => {
@@ -104,7 +104,7 @@ const Demographics = () => {
   const handleReset = () => {
     setSelectedRace(initialRace)
     setSelectedAge(initialAge)
-    setSelectedSex(initialSex)
+    setSelectedGender(initialGender)
     setSelectedCategory('Race')
   }
 
@@ -114,8 +114,8 @@ const Demographics = () => {
         return raceData.find(([race]) => race === selectedRace)?.[1] || 0
       case 'Age':
         return ageData.find(([age]) => age === selectedAge)?.[1] || 0
-      case 'Sex':
-        return sexData.find(([sex]) => sex === selectedSex)?.[1] || 0
+      case 'Gender':
+        return genderData.find(([gender]) => gender === selectedGender)?.[1] || 0
       default:
         return 0
     }
@@ -183,29 +183,29 @@ const Demographics = () => {
             </div>
           </button>
         ))
-      case 'Sex':
-        return sexData.map(([sex, percentage]) => (
+      case 'Gender':
+        return genderData.map(([gender, percentage]) => (
           <button
-            key={sex}
+            key={gender}
             className={`flex h-12 w-[100%] items-center justify-between bg-[#F3F3F4] ${
-              selectedSex === sex ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
+              selectedGender === gender ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
             }`}
-            onClick={() => handleSexClick(sex)}
+            onClick={() => handleGenderClick(gender)}
           >
             <div className='flex items-center'>
               <div
                 className={`h-[16px] w-[16px] ml-4 mr-4 box-border border-black border-[3px] flex items-center justify-center rotate-45 ${
-                  selectedSex === sex ? 'border-white' : ''
+                  selectedGender === gender ? 'border-white' : ''
                 }`}
               >
                 <div
                   className={`h-[60%] w-[60%] box-border border-white border-solid bg-black ${
-                    selectedSex === sex ? 'bg-white' : ''
+                    selectedGender === gender ? 'bg-white' : ''
                   }`}
                 ></div>
               </div>
               <div className=' flex text-center'>
-                {capitalizeFirstLetter(sex)}
+                {capitalizeFirstLetter(gender)}
               </div>
             </div>
             <div className='mr-4 text-[80%]'>
@@ -255,14 +255,14 @@ const Demographics = () => {
             </button>
             <button
               className={`w-[100%] h-[17%] bg-[#F3F3F4] flex flex-col items-start justify-between border-t-2 border-black border-box mb-1 p-3 ${
-                selectedCategory === 'Sex' ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
+                selectedCategory === 'Gender' ? 'bg-black text-white' : 'hover:bg-[#E1E1E2]'
               }`}
-              onClick={() => handleCategoryClick('Sex')}
+              onClick={() => handleCategoryClick('Gender')}
             >
               <div className='text-[16px] font-semibold'>
-                {selectedSex ? capitalizeFirstLetter(selectedSex) : 'Select sex'}
+                {selectedGender ? capitalizeFirstLetter(selectedGender) : 'Select gender'}
               </div>
-              <div className='text-[16px] font-semibold'>Sex</div>
+              <div className='text-[16px] font-semibold'>Gender</div>
             </button>
           </div>
           <div className='relative flex h-[100%] w-[60%] text-[40px] bg-[#F3F3F4] mt-25 ml-4 mr-4 pt-2 pb-2 pl-4 pr-4 border-t-black border-2'>

@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 interface ResponseData {
   race: string;
   age: number;
-  sex: string;
+  gender: string;
 }
 
 const AiCamera = () => {
@@ -100,8 +100,8 @@ const AiCamera = () => {
     if (responseData) {
       const queryString = `?race=${JSON.stringify(
         responseData.race
-      )}&age=${JSON.stringify(responseData.age)}&sex=${JSON.stringify(
-        responseData.sex
+      )}&age=${JSON.stringify(responseData.age)}&gender=${JSON.stringify(
+        responseData.gender
       )}`
       router.push(`/analysis/demographics${queryString}`)
     }
