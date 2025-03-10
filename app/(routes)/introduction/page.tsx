@@ -16,6 +16,7 @@ const Introduction = () => {
   const [underlineWidth, setUnderlineWidth] = useState('auto')
   const [headerText, setHeaderText] = useState('CLICK TO TYPE')
   const [, setError] = useState('')
+  const [isApiAccepted, setIsApiAccepted] = useState(false)
 
   useEffect(() => {
     if (inputRef.current) {
@@ -75,8 +76,10 @@ const Introduction = () => {
         )
         const data = await response.json()
         console.log('API response:', data)
+        setIsApiAccepted(true)
       } catch (error) {
         console.error('Error hitting the API:', error)
+        setIsApiAccepted(false)
       }
     }
   }
@@ -125,8 +128,10 @@ const Introduction = () => {
         )
         const data = await response.json()
         console.log('API response:', data)
+        setIsApiAccepted(true)
       } catch (error) {
         console.error('Error hitting the API:', error)
+        setIsApiAccepted(false)
       }
 
       localStorage.setItem('name', name)
@@ -213,11 +218,17 @@ const Introduction = () => {
           <div className='right-btn mr-7 text-sm tracking-wide'>PROCEED</div>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
-              <Link href='/introduction/photo'>
-                <Button className='right-btn bg-transparent hover:bg-transparent rotate-135'>
+              {isApiAccepted ? (
+                <Link href='/introduction/photo' id='proceed-link'>
+                  <Button className='right-btn bg-transparent hover:bg-transparent rotate-135'>
+                    <div className='w-0 h-0 border-l-5 border-r-5 border-b-8 transform rotate-270 border-transparent border-b-black'></div>
+                  </Button>
+                </Link>
+              ) : (
+                <Button className='right-btn bg-transparent hover:bg-transparent rotate-135' disabled>
                   <div className='w-0 h-0 border-l-5 border-r-5 border-b-8 transform rotate-270 border-transparent border-b-black'></div>
                 </Button>
-              </Link>
+              )}
             </div>
           </div>
         </div>
