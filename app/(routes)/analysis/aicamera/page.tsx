@@ -13,13 +13,13 @@ interface ResponseData {
 }
 
 const AiCamera = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [hasPhoto, setHasPhoto] = useState(false)
-  const [responseData, setResponseData] = useState(null)
+  const router = useRouter()
   const videoRef = useRef<HTMLVideoElement>(null)
   const photoRef = useRef<HTMLCanvasElement>(null)
-  const router = useRouter()
-
+  const [hasPhoto, setHasPhoto] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [responseData, setResponseData] = useState<ResponseData | null>(null)
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
