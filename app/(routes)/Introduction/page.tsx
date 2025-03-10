@@ -187,7 +187,7 @@ const Introduction = () => {
                 )}
               </div>
             </form>
-            <Link href='/introduction/photo' id='proceed-link' />
+            <Link href='/' id='proceed-link' />
           </div>
           <div className='box box-3 flex items-center justify-center'>
             <div className='box box-2 flex items-center justify-center'>
@@ -214,7 +214,7 @@ const Introduction = () => {
           <div className='right-btn mr-7 text-sm tracking-wide'>PROCEED</div>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
-              <Link href='/introduction/photo'>
+              <Link href='/Introduction/photo'>
                 <Button className='right-btn bg-transparent hover:bg-transparent rotate-135'>
                   <div className='w-0 h-0 border-l-5 border-r-5 border-b-8 transform rotate-270 border-transparent border-b-black'></div>
                 </Button>

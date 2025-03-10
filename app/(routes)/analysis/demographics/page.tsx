@@ -43,7 +43,7 @@ const Demographics = () => {
       setInitialAge(highestAge)
       setInitialSex(highestSex)
     } else {
-      router.push('/introduction/photo')
+      router.push('/Introduction/photo')
     }
   }, [router])
 
@@ -290,7 +290,7 @@ const Demographics = () => {
         <div className='left-btn flex items-center justify-center'>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
-              <Link href='/introduction/photo'>
+              <Link href='/Introduction/photo'>
                 <Button className='left-btn bg-transparent hover:bg-transparent -rotate-45'>
                   <div className='w-0 h-0 border-l-5 border-r-5 border-b-8 transform rotate-270 border-transparent border-b-black'></div>
                 </Button>
