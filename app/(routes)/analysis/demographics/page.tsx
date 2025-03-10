@@ -14,7 +14,7 @@ interface ApiResponse {
 }
 
 const Demographics = () => {
-  const [apiResponse, setApiResponse] = useState<ApiResponse>(null)
+  const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null)
   const [selectedAge, setSelectedAge] = useState<string | null>(null)
   const [selectedRace, setSelectedRace] = useState<string | null>(null)
   const [selectedSex, setSelectedSex] = useState<string | null>(null)
@@ -28,7 +28,7 @@ const Demographics = () => {
     const storedResponse = localStorage.getItem('apiResponse')
     console.log('Retrieved from localStorage:', storedResponse)
     if (storedResponse) {
-      const parsedResponse = JSON.parse(storedResponse)
+      const parsedResponse: ApiResponse = JSON.parse(storedResponse)
       setApiResponse(parsedResponse)
 
       // Set initial selected values based on the highest percentage
@@ -74,7 +74,7 @@ const Demographics = () => {
     (a, b) => b[1] - a[1]
   )
 
-  const sexData =  apiResponse.data.sex ? Object.entries(apiResponse.data.sex).sort(
+  const sexData = apiResponse.data.sex ? Object.entries(apiResponse.data.sex).sort(
     (a, b) => b[1] - a[1]
   ) : []
 
@@ -114,7 +114,7 @@ const Demographics = () => {
         return raceData.find(([race]) => race === selectedRace)?.[1] || 0
       case 'Age':
         return ageData.find(([age]) => age === selectedAge)?.[1] || 0
-      case 'Gender':
+      case 'Sex':
         return sexData.find(([sex]) => sex === selectedSex)?.[1] || 0
       default:
         return 0
