@@ -17,6 +17,7 @@ const Introduction = () => {
   const [headerText, setHeaderText] = useState('CLICK TO TYPE')
   const [, setError] = useState('')
   const [isApiAccepted, setIsApiAccepted] = useState(false)
+  const [apiMessage, setApiMessage] = useState('')
 
   useEffect(() => {
     if (inputRef.current) {
@@ -129,9 +130,11 @@ const Introduction = () => {
         const data = await response.json()
         console.log('API response:', data)
         setIsApiAccepted(true)
+        setApiMessage(`Hello ${name} from ${location}!`)
       } catch (error) {
         console.error('Error hitting the API:', error)
         setIsApiAccepted(false)
+        setApiMessage('Error adding your information. Please try again.')
       }
 
       localStorage.setItem('name', name)
@@ -232,6 +235,11 @@ const Introduction = () => {
             </div>
           </div>
         </div>
+        {apiMessage && (
+          <div className='absolute bottom-0 mb-12 text-center text-lg text-black'>
+            {apiMessage}
+          </div>
+        )}
       </main>
     </div>
   )

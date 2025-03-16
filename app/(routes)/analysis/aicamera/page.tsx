@@ -18,6 +18,7 @@ const AiCamera = () => {
   const photoRef = useRef<HTMLCanvasElement>(null)
   const [hasPhoto, setHasPhoto] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [responseData, setResponseData] = useState<ResponseData | null>(null)
   
   useEffect(() => {
@@ -40,6 +41,7 @@ const AiCamera = () => {
         })
         .catch(err => {
           console.error('Error accessing camera: ', err)
+          setErrorMessage('Error accessing camera. Please ensure it is not being used by another application and try again.')
         })
     }
   }, [isLoading])
@@ -89,9 +91,11 @@ const AiCamera = () => {
         } else {
           const errorData = await response.json()
           console.error('Error uploading file:', errorData)
+          setErrorMessage('Error uploading file. Please try again.')
         }
       } catch (error) {
         console.error('Error uploading file:', error)
+        setErrorMessage('Error uploading file. Please try again.')
       }
     }
   }
@@ -228,7 +232,7 @@ const AiCamera = () => {
         ref={photoRef}
         className={`w-screen h-screen object-cover ${hasPhoto ? '' : 'hidden'}`}
       />
-      <div className='left-btn absolute left-[32px] bottom-[40px] flex items-center justify-center z-10'>
+      <div className='left-btn absolute left-[32px] bottom-[40px] bg-white border-18 rounded-sm border-white flex items-center justify-center z-10'>
         <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
           <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
             <Link href='/introduction/photo'>
@@ -241,7 +245,7 @@ const AiCamera = () => {
         <div className='left-btn ml-7 text-sm tracking-wide'>BACK</div>
       </div>
       {hasPhoto && (
-        <div className='right-btn absolute right-[32px] bottom-[40px] flex items-center justify-center z-10'>
+        <div className='right-btn absolute right-[32px] bottom-[40px] bg-white border-18 rounded-sm border-white flex items-center justify-center z-10'>
           <div className='right-btn mr-7 text-sm tracking-wide'>PROCEED</div>
           <div className='outer w-[34px] h-[34px] border-[2px] border-black transform rotate-45 flex items-center justify-center'>
             <div className='inner w-[34px] h-[34px] border-dotted border-[2px] border-black flex items-center justify-center'>
@@ -255,6 +259,12 @@ const AiCamera = () => {
               </Link>
             </div>
           </div>
+        </div>
+      )}
+      )}
+      {errorMessage && (
+        <div className='absolute bottom-0 mb-4 text-center text-sm text-red-600'>
+          {errorMessage}
         </div>
       )}
     </div>

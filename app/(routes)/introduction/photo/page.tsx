@@ -9,7 +9,7 @@ import UploadModal from '@/components/modal/uploadmodal'
 import CameraModal from '@/components/modal/cameramodal'
 
 const Photo = () => {
-  const [, setSelectedFile] = useState<File | null>(null)
+  const [ selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
   const [isCameraModalOpen, setIsCameraModalOpen] = useState(false)
   const [isPhotoUploaded, setIsPhotoUploaded] = useState(false)
@@ -141,6 +141,11 @@ const Photo = () => {
                   </Button>
               </div>
             </div>
+          </div>
+        )}
+        {selectedFile && (
+          <div className='absolute bottom-0 right-[43%] mb-12 text-center text-lg text-black'>
+            {selectedFile.name} successfully uploaded!
           </div>
         )}
     </div>
